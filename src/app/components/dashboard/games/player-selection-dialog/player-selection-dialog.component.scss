@@ -1,23 +1,52 @@
 @import 'src/styles/variables';
 
-.dialog-overlay {
-  @include dialog-overlay;
+// Common colors
+$gray-50: #f8f9fa;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-400: #6b7280;
+$gray-500: #9ca3af;
+$gray-600: #4b5563;
+$gray-800: #1f2937;
+$blue-600: #2563eb;
+$blue-700: #1d4ed8;
+$red-600: #dc2626;
+
+// Common styles
+%flex-column {
+  display: flex;
+  flex-direction: column;
 }
 
-.dialog-container {
-  @include dialog-container;
-  max-width: 900px;
+%base-card {
+  background: #fff;
+  border: 1px solid $gray-200;
+  border-radius: 6px;
+  padding: 12px;
 }
 
-.dialog-header {
-  @include dialog-header;
+%base-input {
+  border: 1px solid $gray-200;
+  border-radius: 6px;
+  font-size: 13px;
+  
+  &:focus {
+    outline: none;
+    border-color: $blue-600;
+    box-shadow: 0 0 0 2px rgba(37,99,235,.1);
+  }
 }
+
+// Main styles
+.dialog-overlay { @include dialog-overlay; }
+.dialog-container { @include dialog-container; max-width: 900px; }
+.dialog-header { @include dialog-header; }
 
 .game-details {
   display: flex;
   padding: 12px 16px;
-  background: #f8f9fa;
-  border-bottom: 1px solid #e5e7eb;
+  background: $gray-50;
+  border-bottom: 1px solid $gray-200;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
@@ -29,22 +58,21 @@
 
   .detail-item {
     label {
-      font-size: 12px;
-      color: #6b7280;
+      font: 500 12px sans-serif;
+      color: $gray-400;
       display: block;
       margin-bottom: 4px;
-      font-weight: 500;
       text-transform: uppercase;
     }
     span {
-      font-size: 14px;
-      font-weight: 500;
-      color: #1f2937;
+      font: 500 14px sans-serif;
+      color: $gray-800;
     }
   }
 }
 
 .dialog-content {
+  @extend %flex-column;
   padding: 16px;
   height: calc(100vh - 300px);
   min-height: 400px;
@@ -59,34 +87,23 @@
 }
 
 .available-players, .selected-players {
-  display: flex;
-  flex-direction: column;
+  @extend %flex-column;
   height: 100%;
   overflow: hidden;
 
   h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0 0 16px 0;
+    font: 600 14px sans-serif;
+    color: $gray-800;
+    margin: 0 0 16px;
   }
 }
 
 .search-box {
   margin-bottom: 12px;
-
   input {
+    @extend %base-input;
     width: 100%;
     padding: 8px 12px;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    font-size: 13px;
-
-    &:focus {
-      outline: none;
-      border-color: #2563eb;
-      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
-    }
   }
 }
 
@@ -98,39 +115,28 @@
   
   &::-webkit-scrollbar {
     width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 3px;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    &-track { background: $gray-100; border-radius: 3px; }
+    &-thumb { 
+      background: #888; 
+      border-radius: 3px;
+      &:hover { background: #555; }
+    }
   }
 }
 
 .player-card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  padding: 12px;
+  @extend %base-card;
   margin-bottom: 8px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: .2s;
 
   &:hover:not(.disabled) {
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
   }
 
   &.disabled {
-    opacity: 0.5;
+    opacity: .5;
     cursor: not-allowed;
   }
 
@@ -138,18 +144,18 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    border-left: 3px solid #2563eb;
+    border-left: 3px solid $blue-600;
   }
 
   .player-name {
-    font-weight: 500;
-    color: #1f2937;
+    font: 500 14px sans-serif;
+    color: $gray-800;
     margin-bottom: 4px;
   }
 
   .player-info {
     font-size: 12px;
-    color: #6b7280;
+    color: $gray-400;
   }
 }
 
@@ -158,7 +164,7 @@
 
   label {
     font-size: 12px;
-    color: #6b7280;
+    color: $gray-400;
     display: block;
     margin-bottom: 4px;
   }
@@ -166,50 +172,46 @@
   .amount-input {
     display: flex;
     align-items: center;
-    border: 1px solid #e5e7eb;
-    border-radius: 4px;
+    @extend %base-input;
     overflow: hidden;
     width: 150px;
 
     .currency-symbol {
       padding: 6px 8px;
-      background: #f3f4f6;
-      color: #6b7280;
-      border-right: 1px solid #e5e7eb;
+      background: $gray-100;
+      color: $gray-400;
+      border-right: 1px solid $gray-200;
       font-size: 12px;
     }
 
     input {
-      border: none;
+      border: 0;
       padding: 6px 8px;
       width: 100%;
       font-size: 13px;
-
-      &:focus {
-        outline: none;
-      }
+      &:focus { outline: 0; }
     }
   }
 
   .error {
-    color: #dc2626;
+    color: $red-600;
     font-size: 11px;
     margin-top: 4px;
   }
 }
 
 .remove-btn {
-  background: none;
-  border: none;
-  color: #9ca3af;
+  background: 0;
+  border: 0;
+  color: $gray-500;
   cursor: pointer;
   padding: 4px;
   font-size: 14px;
   border-radius: 4px;
 
   &:hover {
-    background: #f3f4f6;
-    color: #dc2626;
+    background: $gray-100;
+    color: $red-600;
   }
 }
 
@@ -219,34 +221,30 @@
   button {
     padding: 8px 16px;
     border-radius: 6px;
-    font-weight: 500;
-    font-size: 13px;
-    transition: all 0.2s;
+    font: 500 13px sans-serif;
+    transition: .2s;
     min-width: 100px;
 
     &.btn-secondary {
-      background: #f3f4f6;
-      color: #4b5563;
-      border: none;
-
-      &:hover {
-        background: #e5e7eb;
-      }
+      background: $gray-100;
+      color: $gray-600;
+      border: 0;
+      &:hover { background: $gray-200; }
     }
 
     &.btn-primary {
-      background: #2563eb;
+      background: $blue-600;
       color: white;
-      border: none;
+      border: 0;
 
       &:hover:not(:disabled) {
-        background: #1d4ed8;
+        background: $blue-700;
         transform: translateY(-1px);
-        box-shadow: 0 4px 6px rgba(37, 99, 235, 0.1);
+        box-shadow: 0 4px 6px rgba(37,99,235,.1);
       }
 
       &:disabled {
-        opacity: 0.5;
+        opacity: .5;
         cursor: not-allowed;
         transform: none;
         box-shadow: none;
@@ -261,9 +259,7 @@
     gap: 16px;
   }
 
-  .dialog-content {
-    height: 600px;
-  }
+  .dialog-content { height: 600px; }
 
   .game-details {
     flex-direction: column;
