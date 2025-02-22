@@ -1,0 +1,253 @@
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dialog-container {
+  background: #ffffff;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  max-height: 95vh;
+}
+
+.dialog-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  background: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.dialog-content {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.search-section {
+  margin-bottom: 16px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.players-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  height: calc(100% - 60px);
+}
+
+.available-players,
+.selected-players {
+  display: flex;
+  flex-direction: column;
+}
+
+h3 {
+  margin: 0 0 12px 0;
+  color: #2c3e50;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.players-list {
+  flex: 1;
+  overflow-y: auto;
+  background: #f8f9fa;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 8px;
+  max-height: calc(70vh - 200px);
+}
+
+.player-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.player-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.player-card.selected {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+}
+
+.player-name {
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 4px;
+}
+
+.player-info {
+  font-size: 13px;
+  color: #666;
+}
+
+.buy-in-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.buy-in-input label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: #666;
+}
+
+.amount-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.currency-symbol {
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-right: 1px solid #ddd;
+  color: #666;
+  font-size: 13px;
+}
+
+.amount-input input {
+  width: 100px;
+  border: none;
+  padding: 4px 8px;
+  font-size: 13px;
+}
+
+.buy-in-error {
+  color: #e74c3c;
+  font-size: 11px;
+}
+
+.remove-button {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.dialog-actions {
+  padding: 12px 16px;
+  border-top: 1px solid #eee;
+  background: #f8f9fa;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: #e9ecef;
+  color: #2c3e50;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.game-details {
+  background: #f8f9fa;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+}
+
+.detail-item label {
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+}
+
+.detail-item span {
+  font-size: 14px;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.player-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 768px) {
+  .players-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+} 

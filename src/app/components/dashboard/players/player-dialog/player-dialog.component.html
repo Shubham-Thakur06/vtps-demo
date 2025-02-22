@@ -1,0 +1,113 @@
+<div class="dialog-overlay" *ngIf="show">
+  <div class="dialog-container">
+    <div class="dialog-header">
+      <h2>{{ isEdit ? 'Edit Player' : 'Add Player' }}</h2>
+      <button class="close-btn" (click)="close()">✕</button>
+    </div>
+
+    <div class="dialog-content">
+      <form [formGroup]="playerForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input 
+              type="text" 
+              formControlName="firstName"
+              placeholder="Enter first name"
+              (blur)="capitalizeField('firstName')"
+            >
+            <div class="error" *ngIf="playerForm.get('firstName')?.touched && playerForm.get('firstName')?.errors?.['required']">
+              First name is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Last Name</label>
+            <input 
+              type="text" 
+              formControlName="lastName"
+              placeholder="Enter last name"
+              (blur)="capitalizeField('lastName')"
+            >
+            <div class="error" *ngIf="playerForm.get('lastName')?.touched && playerForm.get('lastName')?.errors?.['required']">
+              Last name is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>ID Type</label>
+            <select formControlName="idType">
+              <option value="">Select ID type</option>
+              <option value="AADHAR">Aadhar Card</option>
+              <option value="PAN">PAN Card</option>
+              <option value="DRIVING_LICENSE">Driving License</option>
+            </select>
+            <div class="error" *ngIf="playerForm.get('idType')?.touched && playerForm.get('idType')?.errors?.['required']">
+              ID type is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>ID Number</label>
+            <input 
+              type="text" 
+              formControlName="idNumber"
+              placeholder="Enter ID number"
+              (blur)="capitalizeField('idNumber')"
+            >
+            <div class="error" *ngIf="playerForm.get('idNumber')?.touched && playerForm.get('idNumber')?.errors?.['required']">
+              ID number is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Contact Number</label>
+          <div class="contact-input">
+            <span class="prefix">+91</span>
+            <input 
+              type="tel" 
+              formControlName="contactNumber"
+              placeholder="Enter mobile number"
+              maxlength="10"
+            >
+          </div>
+          <div class="error" *ngIf="playerForm.get('contactNumber')?.touched && playerForm.get('contactNumber')?.errors?.['required']">
+            Contact number is required
+          </div>
+          <div class="error" *ngIf="playerForm.get('contactNumber')?.touched && playerForm.get('contactNumber')?.errors?.['pattern']">
+            Please enter a valid 10-digit mobile number
+          </div>
+        </div>
+
+        <div class="status-toggle">
+          <span>Status:</span>
+          <label class="switch">
+            <input 
+              type="checkbox" 
+              [checked]="playerForm.get('status')?.value === 'active'"
+              (change)="toggleStatus($event)"
+            >
+            <span class="slider"></span>
+          </label>
+          <span [class.active]="playerForm.get('status')?.value === 'active'">
+            {{ playerForm.get('status')?.value === 'active' ? 'Active' : 'Inactive' }}
+          </span>
+        </div>
+      </form>
+    </div>
+
+    <div class="dialog-footer">
+      <button class="btn-secondary" (click)="close()">Cancel</button>
+      <button 
+        class="btn-primary"
+        (click)="onSubmit()"
+        [disabled]="!playerForm.valid"
+      >
+        {{ isEdit ? 'Update' : 'Add' }}
+      </button>
+    </div>
+  </div>
+</div> 

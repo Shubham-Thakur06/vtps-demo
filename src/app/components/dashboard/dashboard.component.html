@@ -1,0 +1,36 @@
+<div class="dashboard-container">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span>Poker Management</span>
+    </div>
+    
+    <div class="nav-tabs">
+      <a routerLink="/dashboard/games" routerLinkActive="active">Games</a>
+      <a routerLink="/dashboard/players" routerLinkActive="active">Players</a>
+      <a routerLink="/dashboard/payments" routerLinkActive="active">Payments</a>
+      <a routerLink="/dashboard/managers" routerLinkActive="active" *ngIf="user.role === 'admin'">Managers</a>
+    </div>
+
+    <div class="nav-profile" (clickOutside)="isDropdownOpen = false">
+      <button class="profile-button" (click)="isDropdownOpen = !isDropdownOpen">
+        <span>{{ user.username }}</span>
+        <i class="arrow-down"></i>
+      </button>
+      
+      <div class="dropdown-menu" *ngIf="isDropdownOpen">
+        <div class="dropdown-header">
+          <strong>{{ user.username }}</strong>
+          <small>{{ user.role }}</small>
+        </div>
+        <div class="dropdown-divider"></div>
+        <a routerLink="/dashboard/profile">Change Password</a>
+        <div class="dropdown-divider"></div>
+        <a (click)="logout()" class="logout-link">Logout</a>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div> 

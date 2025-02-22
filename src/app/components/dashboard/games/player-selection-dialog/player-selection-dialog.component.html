@@ -1,0 +1,109 @@
+<div class="dialog-overlay">
+  <div class="dialog-container">
+    <div class="dialog-header">
+      <h2>Select Players</h2>
+      <button class="close-btn" (click)="onCancel()">✕</button>
+    </div>
+
+    <!-- Game Details Summary -->
+    <div class="game-details">
+      <div class="detail-group">
+        <div class="detail-item">
+          <label>Game Type</label>
+          <span>{{gameData.gameType}}</span>
+        </div>
+        <div class="detail-item">
+          <label>Table</label>
+          <span>{{gameData.tableNumber}}</span>
+        </div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-item">
+          <label>Buy-in Range</label>
+          <span>₹{{gameData.minBuyIn}} - ₹{{gameData.maxBuyIn}}</span>
+        </div>
+      </div>
+      <div class="detail-group">
+        <div class="detail-item">
+          <label>Lock-in Time</label>
+          <span>{{gameData.lockInTime}}</span>
+        </div>
+        <div class="detail-item">
+          <label>Extension Lock-in</label>
+          <span>{{gameData.extensionLockIn}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-content">
+      <div class="players-grid">
+        <!-- Available Players -->
+        <div class="available-players">
+          <h3>Available Players</h3>
+          <div class="search-box">
+            <input 
+              type="text" 
+              [(ngModel)]="searchTerm"
+              placeholder="Search players..."
+              (input)="filterPlayers()"
+            >
+          </div>
+          <div class="players-list scrollable">
+            <div 
+              *ngFor="let player of filteredPlayers" 
+              class="player-card"
+              (click)="selectPlayer(player)"
+              [class.disabled]="isSelected(player)"
+            >
+              <div class="player-name">{{player.name}}</div>
+              <div class="player-info">Last active: {{player.lastActive | date:'shortDate'}}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selected Players -->
+        <div class="selected-players">
+          <h3>Selected Players ({{selectedPlayers.length}})</h3>
+          <div class="players-list">
+            <div 
+              *ngFor="let player of selectedPlayers" 
+              class="player-card selected"
+            >
+              <div class="player-info">
+                <div class="player-name">{{player.name}}</div>
+                <div class="buy-in-input">
+                  <label>Buy-in Amount</label>
+                  <div class="amount-input">
+                    <span class="currency-symbol">₹</span>
+                    <input 
+                      type="number" 
+                      [(ngModel)]="player.buyIn"
+                      (blur)="validateBuyIn(player)"
+                      [min]="gameData.minBuyIn"
+                      [max]="gameData.maxBuyIn"
+                    >
+                  </div>
+                  <div class="error" *ngIf="player.buyInError">
+                    {{player.buyInError}}
+                  </div>
+                </div>
+              </div>
+              <button class="remove-btn" (click)="removePlayer(player)">✕</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-footer">
+      <button class="btn-secondary" (click)="onCancel()">Cancel</button>
+      <button 
+        class="btn-primary" 
+        (click)="onConfirm()"
+        [disabled]="selectedPlayers.length < 2 || !isAllBuyInsValid()"
+      >
+        Start Game
+      </button>
+    </div>
+  </div>
+</div> 

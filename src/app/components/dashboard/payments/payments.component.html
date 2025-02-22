@@ -1,0 +1,65 @@
+<div class="payments-container">
+  <div class="header">
+    <div class="search-box">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        (keyup.enter)="onSearch()"
+        placeholder="Search by player name..."
+        class="search-input"
+      >
+    </div>
+    <button class="btn-primary" (click)="openPaymentDialog()">
+      Record Payment
+    </button>
+  </div>
+
+  <div class="payments-table-container">
+    <table class="payments-table">
+      <thead>
+        <tr>
+          <th>Player Name</th>
+          <th>Transaction Type</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Recorded By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let payment of payments">
+          <td>{{payment.playerName}}</td>
+          <td>
+            <span class="transaction-type" [class.house-to-player]="payment.type === 'HOUSE_TO_PLAYER'"
+                                        [class.player-to-house]="payment.type === 'PLAYER_TO_HOUSE'">
+              {{payment.type === 'HOUSE_TO_PLAYER' ? 'House → Player' : 'Player → House'}}
+            </span>
+          </td>
+          <td [class.negative]="payment.type === 'HOUSE_TO_PLAYER'"
+              [class.positive]="payment.type === 'PLAYER_TO_HOUSE'">
+            ₹{{payment.amount | number:'1.0-0'}}
+          </td>
+          <td>{{payment.date | date:'dd-MM-yyyy, hh:mm a'}}</td>
+          <td>{{payment.recordedBy}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination" *ngIf="totalItems > pageSize">
+    <button 
+      [disabled]="currentPage === 1"
+      (click)="onPageChange(currentPage - 1)"
+    >
+      Previous
+    </button>
+    <span class="page-info">
+      Page {{currentPage}} of {{Math.ceil(totalItems / pageSize)}}
+    </span>
+    <button 
+      [disabled]="currentPage >= totalItems / pageSize"
+      (click)="onPageChange(currentPage + 1)"
+    >
+      Next
+    </button>
+  </div>
+</div> 

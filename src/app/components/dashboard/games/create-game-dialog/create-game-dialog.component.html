@@ -1,0 +1,111 @@
+<div class="dialog-backdrop">
+  <div class="dialog-wrapper">
+    <div class="dialog-header">
+      <h2>Create New Game</h2>
+      <button class="close-btn" (click)="onCancel()">
+        ✕
+      </button>
+    </div>
+
+    <div class="dialog-body">
+      <form [formGroup]="gameForm" class="game-form">
+        <!-- Game Type Selection -->
+        <div class="form-field">
+          <label>Game Type</label>
+          <div class="select-wrapper">
+            <select formControlName="gameType">
+              <option value="">Select game type</option>
+              <option *ngFor="let type of gameTypes" [value]="type">
+                {{type}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Table Number -->
+        <div class="form-field">
+          <label>Table Number</label>
+          <div class="select-wrapper">
+            <select formControlName="tableNumber">
+              <option value="">Select table</option>
+              <option *ngFor="let num of [1,2,3,4,5]" [value]="num">
+                Table {{num}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Buy-in Range -->
+        <div class="form-field buy-in-section">
+          <label>Buy-in Range</label>
+          <div class="buy-in-inputs">
+            <div class="amount-field">
+              <label>Minimum Buy-in</label>
+              <div class="currency-input">
+                <span class="currency-symbol">₹</span>
+                <input 
+                  type="number" 
+                  formControlName="minBuyIn"
+                  min="100"
+                  placeholder="Min amount"
+                >
+              </div>
+            </div>
+            <div class="amount-field">
+              <label>Maximum Buy-in</label>
+              <div class="currency-input">
+                <span class="currency-symbol">₹</span>
+                <input 
+                  type="number" 
+                  formControlName="maxBuyIn"
+                  [min]="gameForm.get('minBuyIn')?.value || 100"
+                  placeholder="Max amount"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Time Settings -->
+        <div class="form-field time-section">
+          <label>Lock-in Time</label>
+          <div class="time-inputs" formGroupName="lockInTime">
+            <div class="time-field">
+              <input type="number" formControlName="hours" min="0" max="23">
+              <span>Hours</span>
+            </div>
+            <div class="time-field">
+              <input type="number" formControlName="minutes" min="0" max="59">
+              <span>Minutes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-field time-section">
+          <label>Extension Lock-in</label>
+          <div class="time-inputs" formGroupName="extensionLockIn">
+            <div class="time-field">
+              <input type="number" formControlName="hours" min="0" max="23">
+              <span>Hours</span>
+            </div>
+            <div class="time-field">
+              <input type="number" formControlName="minutes" min="0" max="59">
+              <span>Minutes</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="dialog-footer">
+      <button class="btn-cancel" (click)="onCancel()">Cancel</button>
+      <button 
+        class="btn-primary" 
+        (click)="proceedToPlayerSelection()"
+        [disabled]="!gameForm.valid"
+      >
+        Select Players
+      </button>
+    </div>
+  </div>
+</div> 

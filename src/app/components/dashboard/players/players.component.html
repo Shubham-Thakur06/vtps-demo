@@ -1,0 +1,93 @@
+<div class="players-container">
+  <div class="header">
+    <div class="search-box">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        placeholder="Search players by name, ID or contact..."
+        class="search-input"
+      >
+    </div>
+    <button class="btn-primary" (click)="openAddPlayerModal()">
+      Add Player
+    </button>
+  </div>
+
+  <div class="players-section">
+    <h2>Active Players</h2>
+    <table class="players-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>ID Type</th>
+          <th>ID Number</th>
+          <th>Contact</th>
+          <th>Last Active</th>
+          <th>Settlement Balance</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of activePlayers">
+          <td>{{player.name}}</td>
+          <td>{{player.idType}}</td>
+          <td>{{player.idNumber}}</td>
+          <td>{{player.contactNumber}}</td>
+          <td>{{player.lastActive | date:'dd-MM-yyyy, hh:mm a'}}</td>
+          <td [class.negative]="player.settlementBalance < 0" 
+              [class.positive]="player.settlementBalance > 0">
+            ₹{{player.settlementBalance | number:'1.0-0'}}
+          </td>
+          <td>
+            <button class="btn-secondary" (click)="editPlayer(player)">
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="players-section">
+    <h2>Inactive Players</h2>
+    <table class="players-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>ID Type</th>
+          <th>ID Number</th>
+          <th>Contact</th>
+          <th>Last Active</th>
+          <th>Settlement Balance</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of inactivePlayers">
+          <td>{{player.name}}</td>
+          <td>{{player.idType}}</td>
+          <td>{{player.idNumber}}</td>
+          <td>{{player.contactNumber}}</td>
+          <td>{{player.lastActive | date:'dd-MM-yyyy, hh:mm a'}}</td>
+          <td [class.negative]="player.settlementBalance < 0" 
+              [class.positive]="player.settlementBalance > 0">
+            ₹{{player.settlementBalance | number:'1.0-0'}}
+          </td>
+          <td>
+            <button class="btn-secondary" (click)="editPlayer(player)">
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-player-dialog
+    *ngIf="showPlayerDialog"
+    [show]="showPlayerDialog"
+    [playerData]="selectedPlayer"
+    (closeModal)="showPlayerDialog = false"
+    (savePlayer)="handleSavePlayer($event)"
+  ></app-player-dialog>
+</div> 

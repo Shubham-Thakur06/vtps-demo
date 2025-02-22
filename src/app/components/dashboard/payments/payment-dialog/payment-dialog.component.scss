@@ -1,0 +1,226 @@
+@import 'src/styles/variables';
+
+.dialog-overlay {
+  @include dialog-overlay;
+}
+
+.dialog-container {
+  @include dialog-container;
+  max-width: 500px;
+}
+
+.dialog-header {
+  @include dialog-header;
+}
+
+.dialog-content {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.dialog-footer {
+  @include dialog-footer;
+}
+
+.form-group {
+  label {
+    display: block;
+    margin-bottom: $spacing-sm;
+    color: $text-primary;
+    font-weight: 500;
+    font-size: $font-size-sm;
+  }
+}
+
+select.input-field {
+  width: 100%;
+  padding: $spacing-md;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-md;
+  font-size: $font-size-md;
+  background-color: white;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right $spacing-md center;
+  background-size: 16px;
+  padding-right: $spacing-xl;
+
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+  }
+}
+
+.players-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-md;
+  margin-top: $spacing-sm;
+  background: $background-light;
+
+  .player-option {
+    padding: $spacing-md;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 1px solid $border-color;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: rgba($primary, 0.05);
+    }
+
+    &.selected {
+      background: $primary;
+      color: white;
+    }
+  }
+}
+
+.amount-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-md;
+  overflow: hidden;
+  transition: all 0.2s;
+
+  &:focus-within {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+  }
+
+  .currency-symbol {
+    padding: $spacing-md;
+    background: $background-light;
+    color: $text-secondary;
+    font-weight: 500;
+    border-right: 1px solid $border-color;
+  }
+
+  input {
+    flex: 1;
+    border: none;
+    padding: $spacing-md;
+    font-size: $font-size-md;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.payment-summary {
+  background: $background-light;
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  margin-top: $spacing-md;
+
+  h3 {
+    margin: 0 0 $spacing-md;
+    color: $text-primary;
+    font-size: $font-size-md;
+    font-weight: 600;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: $spacing-xs 0;
+    
+    span:first-child {
+      color: $text-secondary;
+    }
+
+    span:last-child {
+      font-weight: 500;
+      color: $text-primary;
+    }
+  }
+}
+
+.dialog-actions {
+  margin-top: $spacing-lg;
+  padding: $spacing-md $spacing-lg;
+  border-top: 1px solid $border-color;
+  background: $background-white;
+  border-radius: 0 0 $border-radius-lg $border-radius-lg;
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-md;
+
+  button {
+    min-width: 100px;
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius-md;
+    font-weight: 500;
+    transition: all 0.2s;
+
+    &.btn-secondary {
+      background: $secondary;
+      color: $text-primary;
+      border: none;
+
+      &:hover {
+        background: darken($secondary, 5%);
+      }
+    }
+
+    &.btn-primary {
+      background: $primary;
+      color: white;
+      border: none;
+
+      &:hover:not(:disabled) {
+        background: darken($primary, 5%);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// Custom scrollbar
+.players-list {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-light;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: darken($background-light, 10%);
+    border-radius: 4px;
+
+    &:hover {
+      background: darken($background-light, 15%);
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dialog-container {
+    width: 95%;
+    margin: $spacing-md;
+  }
+
+  .dialog-actions {
+    flex-direction: column-reverse;
+    gap: $spacing-sm;
+
+    button {
+      width: 100%;
+    }
+  }
+} 

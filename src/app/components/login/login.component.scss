@@ -1,0 +1,110 @@
+.login-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(63, 101, 205, 0.9) 0%, rgba(30, 64, 175, 0.9) 100%),
+    url("/assets/images/poker-bg.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+.login-box {
+  background: white;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+
+  .logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    color: #1f2937;
+    font-size: 24px;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-group {
+    text-align: left;
+
+    label {
+      display: block;
+      font-size: 14px;
+      color: #4b5563;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+      }
+
+      &.error {
+        border-color: #dc2626;
+      }
+
+      &::placeholder {
+        color: #9ca3af;
+      }
+    }
+  }
+
+  .error-message {
+    color: #dc2626;
+    font-size: 14px;
+    margin: 8px 0;
+    text-align: center;
+  }
+
+  button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover:not(:disabled) {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.1);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login-box {
+    margin: 16px;
+    padding: 24px;
+  }
+} 

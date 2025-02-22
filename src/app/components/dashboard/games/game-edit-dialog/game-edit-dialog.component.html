@@ -1,0 +1,212 @@
+<div class="dialog-overlay">
+  <div class="dialog-container">
+    <div class="dialog-header">
+      <h2>{{ gameData.status === 'finished' ? 'Game Details' : (mode === 'view' ? 'View Game' : 'End Game') }}</h2>
+      <button class="close-btn" (click)="onCancel()">✕</button>
+    </div>
+
+    <!-- Game Details Section -->
+    <div class="game-details">
+      <div class="detail-item">
+        <label>Game Type:</label>
+        <span>{{gameData?.gameType}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Table Number:</label>
+        <span>{{gameData?.tableNumber}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Buy-in Range:</label>
+        <span>₹{{gameData?.minBuyIn}} - ₹{{gameData?.maxBuyIn}}</span>
+      </div>
+      <div class="detail-item">
+        <label>Start Time:</label>
+        <span>{{gameData?.startTime | date:'shortTime'}}</span>
+      </div>
+      <div class="detail-item" *ngIf="gameData.status === 'finished'">
+        <label>End Time:</label>
+        <span>{{gameData?.endTime | date:'shortTime'}}</span>
+      </div>
+    </div>
+
+    <!-- Different content based on game status -->
+    <div class="dialog-content">
+      <!-- Active Game View -->
+      <ng-container *ngIf="gameData.status !== 'finished'; else finishedGame">
+        <div class="players-grid">
+          <!-- Available Players -->
+          <div class="available-players" *ngIf="mode === 'view'">
+            <h3>Available Players</h3>
+            <div class="search-box">
+              <input 
+                type="text" 
+                [(ngModel)]="searchTerm"
+                placeholder="Search players..."
+                (input)="filterPlayers()"
+              >
+            </div>
+            <div class="players-list">
+              <div 
+                *ngFor="let player of filteredPlayers" 
+                class="player-card"
+                (click)="addPlayerToGame(player)"
+                [class.disabled]="isPlayerInGame(player)"
+                [class.clickable]="!isPlayerInGame(player)"
+              >
+                <div class="player-name">{{player.name}}</div>
+                <div class="player-info">Last active: {{player.lastActive | date:'shortDate'}}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Players -->
+          <div class="active-players">
+            <h3>Playing ({{activePlayers.length}})</h3>
+            <div class="players-list">
+              <div 
+                *ngFor="let player of activePlayers" 
+                class="player-card active"
+              >
+                <div class="player-info">
+                  <div class="player-name">{{player.name}}</div>
+                  <div class="buy-in-details">
+                    <span>Total Buy-in: ₹{{player.totalBuyIn | number:'1.0-0'}}</span>
+                  </div>
+                </div>
+                <div class="player-actions">
+                  <button class="btn-action topup" (click)="openTopupDialog(player)">Top-up</button>
+                  <button class="btn-action cashout" (click)="openCashoutDialog(player)">Cash-out</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cashed Out Players for Active Game -->
+        <div class="cashed-out-players">
+          <h3>Cashed Out Players</h3>
+          <div class="players-list">
+            <div 
+              *ngFor="let player of cashedOutPlayers" 
+              class="player-card cashed-out"
+            >
+              <div class="player-info">
+                <div class="player-name">{{player.name}}</div>
+                <div class="transaction-details">
+                  <div class="detail-row">
+                    <span>Total Buy-in:</span>
+                    <span class="amount">₹{{player.totalBuyIn | number:'1.0-0'}}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span>Cash-out:</span>
+                    <span class="amount">₹{{player.cashOut | number:'1.0-0'}}</span>
+                  </div>
+                  <div class="detail-row total">
+                    <span>Profit/Loss:</span>
+                    <span 
+                      class="amount" 
+                      [class.profit]="(player?.profit ?? 0) > 0" 
+                      [class.loss]="(player?.profit ?? 0) < 0"
+                    >
+                      ₹{{player?.profit ?? 0 | number:'1.0-0'}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Finished Game View -->
+      <ng-template #finishedGame>
+        <div class="cashed-out-players finished-game">
+          <h3>Game Results</h3>
+          <div class="players-list">
+            <div 
+              *ngFor="let player of cashedOutPlayers" 
+              class="player-card cashed-out"
+            >
+              <div class="player-info">
+                <div class="player-name">{{player.name}}</div>
+                <div class="transaction-details">
+                  <div class="detail-row">
+                    <span>Total Buy-in:</span>
+                    <span class="amount">₹{{player.totalBuyIn | number:'1.0-0'}}</span>
+                  </div>
+                  <div class="detail-row">
+                    <span>Cash-out:</span>
+                    <span class="amount">₹{{player.cashOut | number:'1.0-0'}}</span>
+                  </div>
+                  <div class="detail-row total">
+                    <span>Profit/Loss:</span>
+                    <span 
+                      class="amount" 
+                      [class.profit]="(player?.profit ?? 0) > 0" 
+                      [class.loss]="(player?.profit ?? 0) < 0"
+                    >
+                      ₹{{player?.profit ?? 0 | number:'1.0-0'}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Amount Input Overlay -->
+    <div class="amount-overlay" *ngIf="showAmountInput">
+      <div class="amount-popup">
+        <div class="dialog-header">
+          <h2>{{ amountType === 'topup' ? 'Top-up Amount' : 'Cash-out Amount' }}</h2>
+          <button class="close-btn" (click)="closeAmountInput()">✕</button>
+        </div>
+        
+        <div class="dialog-content">
+          <div class="player-info">
+            <span class="label">Player:</span>
+            <span class="value">{{selectedPlayer?.name}}</span>
+          </div>
+          <div class="amount-input">
+            <label>Enter Amount</label>
+            <div class="currency-input">
+              <span class="currency-symbol">₹</span>
+              <input 
+                type="number"
+                [(ngModel)]="amount"
+                placeholder="Enter amount"
+                min="1"
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="dialog-footer">
+          <button class="btn-secondary" (click)="closeAmountInput()">Cancel</button>
+          <button 
+            class="btn-primary"
+            (click)="confirmAmount()"
+            [disabled]="!amount || amount <= 0"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="dialog-footer">
+      <button class="btn-secondary" (click)="onCancel()">Close</button>
+      <button 
+        *ngIf="mode === 'end' && gameData.status !== 'finished'"
+        class="btn-primary" 
+        (click)="endGame()"
+        [disabled]="activePlayers.length > 0"
+      >
+        End Game
+      </button>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,113 @@
+.navbar {
+  background-color: #2c3e50;
+  padding: 0.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-brand {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-tabs a {
+  color: #ecf0f1;
+  text-decoration: none;
+  padding: 1rem 1.5rem;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-tabs a:hover {
+  color: white;
+  border-bottom-color: rgba(255,255,255,0.3);
+}
+
+.nav-tabs a.active {
+  color: white;
+  border-bottom-color: #e74c3c;
+}
+
+.nav-profile {
+  position: relative;
+}
+
+.profile-button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.arrow-down {
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  min-width: 200px;
+  margin-top: 0.5rem;
+}
+
+.dropdown-header {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.dropdown-header strong {
+  display: block;
+  color: #2c3e50;
+}
+
+.dropdown-header small {
+  color: #7f8c8d;
+  font-size: 0.875rem;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 0.5rem 0;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #2c3e50;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f8f9fa;
+}
+
+.logout-link {
+  color: #e74c3c !important;
+  cursor: pointer;
+}
+
+.dashboard-content {
+  padding: 2rem;
+} 

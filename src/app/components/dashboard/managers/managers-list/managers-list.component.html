@@ -1,0 +1,80 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Managers</h1>
+    <button class="btn-primary" (click)="openAddManager()">
+      Add Manager
+    </button>
+  </div>
+
+  <div class="search-filter">
+    <div class="search-box">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        (input)="filterManagers()"
+        placeholder="Search managers..."
+      >
+    </div>
+    <div class="status-filter">
+      <label>Status:</label>
+      <select [(ngModel)]="statusFilter" (change)="filterManagers()">
+        <option value="all">All</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="managers-grid">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>ID Type</th>
+          <th>ID Number</th>
+          <th>Contact</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let manager of filteredManagers">
+          <td>{{manager.firstName}} {{manager.lastName}}</td>
+          <td>{{manager.idType}}</td>
+          <td>{{manager.idNumber}}</td>
+          <td>{{manager.contactNumber}}</td>
+          <td>
+            <span class="status-badge" [class.active]="manager.status === 'active'">
+              {{manager.status}}
+            </span>
+          </td>
+          <td class="actions">
+            <button 
+              class="btn-icon edit-btn" 
+              (click)="editManager(manager)"
+              title="Edit Manager"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+            <button 
+              class="btn-icon reset-btn" 
+              (click)="resetPassword(manager)"
+              title="Reset Password"
+            >
+              <i class="fas fa-key"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Add the manager dialog -->
+  <app-manager-dialog
+    [show]="showDialog"
+    [isEdit]="!!selectedManager"
+    [manager]="selectedManager"
+    (close)="onDialogClosed()"
+    (saved)="onManagerSaved()"
+  ></app-manager-dialog>
+</div> 

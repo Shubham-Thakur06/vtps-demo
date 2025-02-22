@@ -1,0 +1,111 @@
+<div class="dialog-overlay" *ngIf="show">
+  <div class="dialog-container">
+    <div class="dialog-header">
+      <h2>{{ isEdit ? 'Edit Manager' : 'Add Manager' }}</h2>
+      <button class="close-btn" (click)="close.emit()">✕</button>
+    </div>
+
+    <div class="dialog-content">
+      <form [formGroup]="managerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>First Name</label>
+          <input 
+            type="text" 
+            formControlName="firstName"
+            placeholder="Enter first name"
+            (blur)="capitalizeField('firstName')"
+          >
+          <div class="error" *ngIf="managerForm.get('firstName')?.touched && managerForm.get('firstName')?.errors?.['required']">
+            First name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Last Name</label>
+          <input 
+            type="text" 
+            formControlName="lastName"
+            placeholder="Enter last name"
+            (blur)="capitalizeField('lastName')"
+          >
+          <div class="error" *ngIf="managerForm.get('lastName')?.touched && managerForm.get('lastName')?.errors?.['required']">
+            Last name is required
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>ID Type</label>
+            <select formControlName="idType">
+              <option value="">Select ID type</option>
+              <option value="AADHAR">Aadhar Card</option>
+              <option value="PAN">PAN Card</option>
+              <option value="DRIVING_LICENSE">Driving License</option>
+            </select>
+            <div class="error" *ngIf="managerForm.get('idType')?.touched && managerForm.get('idType')?.errors?.['required']">
+              ID type is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>ID Number</label>
+            <input 
+              type="text" 
+              formControlName="idNumber"
+              placeholder="Enter ID number"
+              (blur)="capitalizeField('idNumber')"
+            >
+            <div class="error" *ngIf="managerForm.get('idNumber')?.touched && managerForm.get('idNumber')?.errors?.['required']">
+              ID number is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Contact Number</label>
+          <div class="contact-input">
+            <span class="prefix">+91</span>
+            <input 
+              type="tel" 
+              formControlName="contactNumber"
+              placeholder="Enter mobile number"
+              maxlength="10"
+            >
+          </div>
+          <div class="error" *ngIf="managerForm.get('contactNumber')?.touched && managerForm.get('contactNumber')?.errors?.['required']">
+            Contact number is required
+          </div>
+          <div class="error" *ngIf="managerForm.get('contactNumber')?.touched && managerForm.get('contactNumber')?.errors?.['pattern']">
+            Please enter a valid 10-digit mobile number
+          </div>
+        </div>
+
+        <div class="status-toggle">
+          <span>Status:</span>
+          <label class="switch">
+            <input 
+              type="checkbox" 
+              [checked]="managerForm.get('status')?.value === 'active'"
+              (change)="toggleStatus($event)"
+            >
+            <span class="slider"></span>
+          </label>
+          <span [class.active]="managerForm.get('status')?.value === 'active'">
+            {{ managerForm.get('status')?.value === 'active' ? 'Active' : 'Inactive' }}
+          </span>
+        </div>
+      </form>
+    </div>
+
+    <div class="dialog-footer">
+      <button class="btn-secondary" (click)="close.emit()">Cancel</button>
+      <button 
+        class="btn-primary"
+        (click)="onSubmit()"
+        [disabled]="!managerForm.valid"
+      >
+        {{ isEdit ? 'Update' : 'Add' }}
+      </button>
+    </div>
+  </div>
+</div> 

@@ -1,0 +1,100 @@
+@import 'styles/variables';
+
+/* Global Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  color: $text-primary;
+  line-height: 1.5;
+}
+
+/* Common Components */
+.card {
+  @include card;
+}
+
+.btn-primary {
+  @include button-primary;
+}
+
+.btn-secondary {
+  @include button-secondary;
+}
+
+.btn-success {
+  @include button-success;
+}
+
+.btn-danger {
+  @include button-danger;
+}
+
+.input-field {
+  @include input-base;
+}
+
+/* Dialog Styles */
+.dialog-overlay {
+  @include dialog-overlay;
+}
+
+.dialog-container {
+  @include dialog-container;
+}
+
+/* Common Utility Classes */
+.text-success {
+  color: $success;
+}
+
+.text-danger {
+  color: $danger;
+}
+
+.text-primary {
+  color: $primary;
+}
+
+.text-secondary {
+  color: $text-secondary;
+}
+
+.bg-light {
+  background: $background-light;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $border-color;
+}
+
+.rounded {
+  border-radius: $border-radius-md;
+}
+
+.shadow-sm {
+  box-shadow: $shadow-sm;
+}
+
+.shadow-md {
+  box-shadow: $shadow-md;
+}
+
+.shadow-lg {
+  box-shadow: $shadow-lg;
+}
+
+/* Spacing Utilities */
+.m-0 { margin: 0; }
+.mt-1 { margin-top: $spacing-xs; }
+.mt-2 { margin-top: $spacing-sm; }
+.mt-3 { margin-top: $spacing-md; }
+.mt-4 { margin-top: $spacing-lg; }
+.mb-1 { margin-bottom: $spacing-xs; }
+.mb-2 { margin-bottom: $spacing-sm; }
+.mb-3 { margin-bottom: $spacing-md; }
+.mb-4 { margin-bottom: $spacing-lg; }
+
+.p-0 { padding: 0; }
+.p-1 { padding: $spacing-xs; }
+.p-2 { padding: $spacing-sm; }
+.p-3 { padding: $spacing-md; }
+.p-4 { padding: $spacing-lg; } 

@@ -1,0 +1,74 @@
+<div class="dialog-overlay">
+  <div class="dialog-container">
+    <div class="dialog-header">
+      <h2>Record Payment</h2>
+      <button class="close-btn" (click)="close()">✕</button>
+    </div>
+
+    <div class="dialog-content">
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+        <!-- Payment Type Selection -->
+        <div class="form-group">
+          <label>Payment Type</label>
+          <select formControlName="type" class="input-field">
+            <option value="">Select payment type</option>
+            <option value="PLAYER_TO_HOUSE">Player to House</option>
+            <option value="HOUSE_TO_PLAYER">House to Player</option>
+          </select>
+        </div>
+
+        <!-- Player Selection -->
+        <div class="form-group">
+          <label>Select Player</label>
+          <div class="search-box">
+            <input 
+              type="text"
+              [(ngModel)]="searchTerm"
+              [ngModelOptions]="{standalone: true}"
+              placeholder="Search player..."
+              (input)="filterPlayers()"
+              class="input-field"
+            >
+          </div>
+          <div class="players-list">
+            <div 
+              *ngFor="let player of filteredPlayers"
+              class="player-option"
+              [class.selected]="paymentForm.get('playerId')?.value === player.id"
+              (click)="selectPlayer(player)"
+            >
+              {{player.name}}
+            </div>
+          </div>
+        </div>
+
+        <!-- Amount -->
+        <div class="form-group">
+          <label>Amount</label>
+          <div class="amount-input">
+            <span class="currency-symbol">₹</span>
+            <input 
+              type="number"
+              formControlName="amount"
+              placeholder="Enter amount"
+              min="1"
+              class="input-field"
+            >
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="dialog-actions">
+          <button type="button" class="btn-secondary" (click)="close()">Cancel</button>
+          <button 
+            type="submit" 
+            class="btn-primary"
+            [disabled]="!paymentForm.valid"
+          >
+            Record Payment
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 

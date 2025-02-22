@@ -1,0 +1,88 @@
+<div class="games-container">
+  <div class="header">
+    <div class="search-box">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm"
+        placeholder="Search games..."
+        class="search-input"
+      >
+    </div>
+    <button class="btn-primary" (click)="openCreateGameDialog()">
+      Create Game
+    </button>
+  </div>
+
+  <!-- Active Games Section -->
+  <div class="games-section">
+    <h2>Active Games</h2>
+    <div class="games-table-container">
+      <table class="games-table">
+        <thead>
+          <tr>
+            <th (click)="sortGames('tableNumber')">Table #</th>
+            <th (click)="sortGames('gameType')">Game Type</th>
+            <th>Players</th>
+            <th (click)="sortGames('minBuyIn')">Min Buy-in</th>
+            <th (click)="sortGames('minBuyIn')">Max Buy-in</th>
+            <th (click)="sortGames('startTime')">Start Time</th>
+            <th (click)="sortGames('startTime')">Created By</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let game of filterGames(activeGames)">
+            <td>{{game.tableNumber}}</td>
+            <td>{{game.gameType}}</td>
+            <td>{{game.players.length}}</td>
+            <td>₹{{game.minBuyIn}}</td>
+            <td>₹{{game.maxBuyIn}}</td>
+            <td>{{game.startTime | date:'dd-MM-yyyy, hh:mm a'}}</td>
+            <td>{{game.createdBy}}</td>
+            <td class="actions">
+              <button class="btn-action view" (click)="viewGame(game)">View</button>
+              <button class="btn-action end" (click)="endGame(game)">End</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Finished Games Section -->
+  <div class="games-section">
+    <h2>Finished Games</h2>
+    <div class="games-table-container">
+      <table class="games-table">
+        <thead>
+          <tr>
+            <th (click)="sortGames('tableNumber')">Table #</th>
+            <th (click)="sortGames('gameType')">Game Type</th>
+            <th>Players</th>
+            <th (click)="sortGames('minBuyIn')">Min Buy-in</th>
+            <th (click)="sortGames('minBuyIn')">Max Buy-in</th>
+            <th (click)="sortGames('startTime')">Start Time</th>
+            <th (click)="sortGames('endTime')">End Time</th>
+            <th (click)="sortGames('createdBy')">Created By</th>
+            <th >Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let game of filterGames(finishedGames)">
+            <td>{{game.tableNumber}}</td>
+            <td>{{game.gameType}}</td>
+            <td>{{game.players.length}}</td>
+            <td>₹{{game.minBuyIn}}</td>
+            <td>₹{{game.maxBuyIn}}</td>
+            <td>{{game.startTime | date:'dd-MM-yyyy, hh:mm a'}}</td>
+            <td>{{game.endTime | date:'dd-MM-yyyy, hh:mm a'}}</td>
+            <td>{{game.createdBy}}</td>
+            <td class="actions">
+              <button class="btn-action view" (click)="viewGame(game)">View</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> 
