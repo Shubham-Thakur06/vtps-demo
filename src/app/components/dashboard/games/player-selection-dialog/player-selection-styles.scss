@@ -1,0 +1,131 @@
+.available-players, .selected-players {
+  @extend %flex-column;
+  height: 100%;
+  overflow: hidden;
+
+  h3 {
+    font: 600 14px sans-serif;
+    color: $gray-800;
+    margin: 0 0 16px;
+  }
+}
+
+.search-box {
+  margin-bottom: 12px;
+  input {
+    @extend %base-input;
+    width: 100%;
+    padding: 8px 12px;
+  }
+}
+
+.players-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+  min-height: 0;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+    &-track { background: $gray-100; border-radius: 3px; }
+    &-thumb { 
+      background: #888; 
+      border-radius: 3px;
+      &:hover { background: #555; }
+    }
+  }
+}
+
+.player-card {
+  @extend %base-card;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover:not(.disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
+  }
+
+  &.disabled { opacity: .5; cursor: not-allowed; }
+  &.selected {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-left: 3px solid $blue-600;
+  }
+
+  .player-name {
+    font: 500 14px sans-serif;
+    color: $gray-800;
+    margin-bottom: 4px;
+  }
+  .player-info { font-size: 12px; color: $gray-400; }
+}
+
+.buy-in-input {
+  margin-top: 8px;
+  label {
+    font-size: 12px;
+    color: $gray-400;
+    display: block;
+    margin-bottom: 4px;
+  }
+}
+
+.amount-input {
+  display: flex;
+  align-items: center;
+  @extend %base-input;
+  overflow: hidden;
+  width: 150px;
+
+  .currency-symbol {
+    padding: 6px 8px;
+    background: $gray-100;
+    color: $gray-400;
+    border-right: 1px solid $gray-200;
+    font-size: 12px;
+  }
+
+  input {
+    border: 0;
+    padding: 6px 8px;
+    width: 100%;
+    font-size: 13px;
+    &:focus { outline: 0; }
+  }
+}
+
+.remove-btn {
+  background: 0;
+  border: 0;
+  color: $gray-500;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 14px;
+  border-radius: 4px;
+
+  &:hover {
+    background: $gray-100;
+    color: $red-600;
+  }
+}
+
+.dialog-footer {
+  @include dialog-footer;
+  button { @extend %dialog-button; }
+}
+
+@media (max-width: 768px) {
+  .players-grid { grid-template-columns: 1fr; gap: 16px; }
+  .dialog-content { height: 600px; }
+  .game-details {
+    flex-direction: column;
+    gap: 12px;
+    .detail-group {
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+} 
